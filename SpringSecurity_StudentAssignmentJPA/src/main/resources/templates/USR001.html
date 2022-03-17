@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>(USR001) User Search</title>
+<link th:href="@{/resources/css/base.css}" rel="stylesheet" />
+<link th:href="@{/resources/css/container.css}" rel="stylesheet" />
+<script type="text/javascript" th:src="@{/resources/js/accordion-menu.js}"></script>
+<script type="text/javascript" th:src="@{/resources/js/general.js}"></script>
+<script type="text/javascript">
+	window.onload = function() {
+		menu();
+	}
+	function checkDelete() {
+		var c = confirm("Are you sure you want to delete!");
+		if (c) {
+			document.getElementById("deleteuser").submit();
+		}
+
+	}
+</script>
+</head>
+<body class="main_body">
+<div th:insert="header :: header"></div>
+	<div id="container">
+		<div id="left_menu">
+			<!-- menu html code exist the menu function of general.js -->
+		</div>
+		<div id="main_contents">
+			<div id="contents">
+				<div class="search_form">
+					<h3>User Search</h3>
+					<form th:action="setupusersearch" th:object="${user}" method="post">
+						<table class="tableForm">
+							<tr>
+								<td class="tblLabel"><label>User ID</label></td>
+								<td class="tblInputNormal"><input type="text"
+									id="txtUserId" class="txt" th:field="*{id}" /></td>
+
+								<td class="tblLabel">User Name</td>
+								<td class="tblInputNormal"><input type="text"
+									id="txtUserName" class="txt" th:field="*{name}" /></td>
+
+							</tr>
+						</table>
+
+						<br /> <input type="submit" value="Search" class="button" />
+					
+					<a href="/useradd"> <input type="button" value="Add"
+						class="button" id="userInsert" />
+					</a>
+					<a href="usersearch"> <input type="button" value="Reset" class="button" /></a>
+					<a href="/usreport"> <input type="button" value="Report"
+						class="button" id="userInsert" />
+					</a>
+					<a href="/userexport"> <input type="button" value="Excel"
+						class="button" id="userInsert" />
+					</a>
+					 <br /> <br />
+					</form>
+					<br/><br/>
+					<div id="errormsg">
+						<label id="message"></label>
+					</div>
+					<label style="color: blue;"></label>
+				</div>
+
+				<br />
+				<br />
+				<br />
+				<div id="list">
+
+					<table class="resultTable">
+						
+							<tr class="tblHeader" th:if="${userlist!=null}">
+								<th width="1%">Delete</th>
+								<th width="1%">Update</th>
+								<th width="12%">User ID</th>
+								<th width="24%">User Name</th>
+
+							</tr>
+						
+						<tr th:each="userlist: ${userlist}">
+								<td>
+								<a th:href="@{/userdelete(id=${userlist.id})}"> Delete </a></td>
+							
+							
+								<td><a th:href="@{/setupuserupdate(id=${userlist.id})}"> Update</a></td>
+
+								<td th:text="${userlist.id}"></td>
+								<td th:text="${userlist.name}"></td>
+							</tr>
+					</table>
+
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+	<div class="footer">
+		<span>Copyright &#169; ACE Inspiration 2016</span>
+	</div>
+</body>
+</html>
